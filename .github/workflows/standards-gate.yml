@@ -1,0 +1,65 @@
+name: 标准门禁
+
+on:
+  pull_request:
+    paths:
+      - "docs/engineering/**"
+      - "gates/**"
+      - "templates/**"
+      - "skills/**"
+      - "policies/**"
+  workflow_dispatch:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 门禁自测
+        run: python3 -m unittest discover gates/tests -v
+
+      - name: 校验本次改动涉及的运行目录
+        run: |
+          set -euo pipefail
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "${base:-}" ]; then
+            echo "非 PR 触发，跳过运行目录校验"
+            exit 0
+          fi
+          mapfile -t dirs < <(
+            git diff --name-only "$base" HEAD -- 'docs/engineering/*' \
+              | awk -F/ 'NF>=3 {print $1"/"$2"/"$3}' \
+              | sort -u
+          )
+          if [ "${#dirs[@]}" -eq 0 ]; then
+            echo "本次 PR 未改动 docs/engineering/，跳过"
+            exit 0
+          fi
+          fail=0
+          for d in "${dirs[@]}"; do
+            if [ ! -d "$d" ]; then
+              echo "跳过已删除的目录：$d"
+              continue
+            fi
+            echo "== 校验 $d"
+            echo "### $d" >> "$GITHUB_STEP_SUMMARY"
+            if python3 gates/run.py "$d" --all; then
+              echo "- ✅ 通过" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "- ❌ 未通过（见日志）" >> "$GITHUB_STEP_SUMMARY"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: 校验示例样例
+        run: python3 gates/run.py examples/sample-run --all
