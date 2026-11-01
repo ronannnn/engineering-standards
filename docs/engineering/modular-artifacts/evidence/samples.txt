@@ -1,0 +1,14 @@
+命令：python3 gates/run.py examples/sample-run --all
+✓ 全链通过：examples/sample-run
+
+命令：python3 gates/run.py examples/modular-run --all
+✓ 模块树检查通过：examples/modular-run
+
+命令：python3 gates/run.py examples/modular-run --delivery
+✓ 模块树检查通过：examples/modular-run
+
+命令：python3 gates/run.py examples/modular-run --module users --stage 06
+✓ 模块 users 自检通过：examples/modular-run
+
+命令：python3 gates/run.py examples/modular-run --module orders/refund --next
+✓ 模块 orders/refund 及依赖全部冻结且有效，没有待办

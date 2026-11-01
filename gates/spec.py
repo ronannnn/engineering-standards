@@ -53,7 +53,8 @@ ARTIFACTS = [
     dict(code="06", title="测试与评审", product="review-report", file="06-review-report.md",
          prefix="REV", depends="05-implementation.md", signoff="auto", na_allowed=False),
     dict(code="07", title="集成与交付", product="delivery", file="07-delivery.md",
-         prefix="DLV", depends="06-test-report.md", signoff="human", na_allowed=False),
+         prefix="DLV", depends="06-test-report.md", also_depends=("06-review-report.md",),
+         signoff="human", na_allowed=False),
     dict(code="08", title="维护与复盘", product="retro", file="08-retro.md",
          prefix="RTR", depends="07-delivery.md", signoff="auto", na_allowed=True),
 ]
@@ -76,6 +77,10 @@ GATE_MODULES = {
 
 STATUSES = ("草稿", "待签收", "已冻结", "已废弃")
 SIGNOFF_MACHINE = "机器门禁"
+DELIVERY_CODES = ("01", "02", "03", "04", "05", "06", "07")
+MODULE_CODES = ("01", "02", "03", "04", "05", "06", "08")
+COMMON_CODES = ("01", "02", "03")
+REQUIRED_CI_CHECKS = ("单元测试", "构建", "静态检查", "安全扫描", "标准门禁")
 AI_LEVELS = ("人工独立", "人工主导", "人工引导", "人工把关", "模型自主", "不适用")
 
 
@@ -88,3 +93,8 @@ def by_product(product: str) -> dict:
 
 def by_code(code: str) -> list[dict]:
     return [a for a in ARTIFACTS if a["code"] == code]
+
+
+def dependencies(entry: dict) -> tuple[str, ...]:
+    primary = (entry["depends"],) if entry["depends"] else ()
+    return primary + tuple(entry.get("also_depends", ()))

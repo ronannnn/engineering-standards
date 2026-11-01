@@ -1,0 +1,16 @@
+..................................F....................................................
+======================================================================
+FAIL: test_module_functional_requirement_ids_are_unique (test_modular.ModularTest.test_module_functional_requirement_ids_are_unique)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 81, in test_module_functional_requirement_ids_are_unique
+    self.blocked('--stage', '01', contains='功能需求编号重复')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 模块树检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpsiobj3a9/run
+
+
+----------------------------------------------------------------------
+Ran 87 tests in 0.714s
+
+FAILED (failures=1)

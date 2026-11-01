@@ -71,7 +71,23 @@ def _matrix(ctx, art) -> None:
     table = _lib.need_table(ctx.issues, art, sec, "验证矩阵", min_rows=1)
     if table is None:
         return
-    _lib.rows_where_filled(ctx.issues, art, table, ["场景", "覆盖任务", "验证类型", "对应验收标准"], "验证矩阵")
+    rows = _lib.rows_where_filled(ctx.issues, art, table, ["场景", "覆盖任务", "验证类型", "对应验收标准"], "验证矩阵")
+    if hasattr(ctx, 'acceptance_ids'):
+        import gate06_test_report
+        covered = set()
+        for row in rows:
+            for ac in gate06_test_report.split_refs(table.cell(row, '对应验收标准')):
+                covered.add(ac)
+                if ac not in ctx.acceptance_ids:
+                    ctx.issue(art, row.line, f'验证矩阵引用未知验收标准：{ac}')
+            for task in re.split(r'[、,，;；]+', table.cell(row, '覆盖任务')):
+                task = re.sub(r'任务\s*(\d+)', r'任务 \1', task.strip('` '))
+                if task.isdigit():
+                    task = '任务 ' + task
+                if task not in ctx.task_ids:
+                    ctx.issue(art, row.line, f'验证矩阵引用未知任务：{task}')
+        for ac in ctx.acceptance_ids - covered:
+            ctx.issue(art, table.line, f'验证矩阵缺少验收标准：{ac}')
 
 
 def _risks(ctx, art) -> None:

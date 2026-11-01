@@ -56,23 +56,26 @@ def _tasks(ctx, art) -> None:
 
     for line, title, lines in blocks:
         text = _lib.block_text(lines)
-        if "测试命令" not in text:
+        command = re.search(r"^-\s*测试命令[:：][ \t]*([^\n]*)$", text, re.M)
+        if not command or not command.group(1).strip("` -"):
             ctx.issue(art, line, f"{title} 缺少「测试命令」")
+        segments = {}
+        # 每个顶层列表项都是边界；RED 不能读取 GREEN 或计划偏差的字段。
+        items = list(re.finditer(r"^-\s+([^\n]+)", text, re.M))
+        for i, item in enumerate(items):
+            heading = re.split(r"[:：]", item.group(1), maxsplit=1)[0].strip()
+            end = items[i + 1].start() if i + 1 < len(items) else len(text)
+            if heading in segments:
+                ctx.issue(art, line, f"{title} 重复的证据段：{heading}")
+            segments[heading] = text[item.end():end]
         for phase in ("RED 证据", "GREEN 证据"):
-            marker = text.find(phase)
-            if marker == -1:
+            if phase not in segments:
                 ctx.issue(art, line, f"{title} 缺少「{phase}」")
                 continue
-            tail = text[marker:]
-            if "命令" not in tail:
-                ctx.issue(art, line, f"{title} 的 {phase} 没有记录命令")
-            if "输出摘要" not in tail:
-                ctx.issue(art, line, f"{title} 的 {phase} 没有记录输出摘要")
-            else:
-                summary = tail.split("输出摘要", 1)[1]
-                summary = re.sub(r"^[:：\s]+", "", summary).strip()
-                if len(summary) < 4:
-                    ctx.issue(art, line, f"{title} 的 {phase} 输出摘要为空")
+            for field in ("命令", "输出摘要"):
+                values = re.findall(rf"^\s+-\s*{field}[:：][ \t]*([^\n]*)$", segments[phase], re.M)
+                if len(values) != 1 or not values[0].strip("` -"):
+                    ctx.issue(art, line, f"{title} 的 {phase} 缺少非空且唯一的{field}")
 
 
 def _files(ctx, art) -> None:

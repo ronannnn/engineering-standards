@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "modules": [
+    {
+      "path": "module-a/submodule-b",
+      "depends_on": [],
+      "baseline": {"01": 1, "02": 1, "03": 1}
+    }
+  ]
+}

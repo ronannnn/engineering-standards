@@ -47,7 +47,12 @@ def _functional(ctx, art) -> None:
     if not reqs:
         ctx.issue(art, sec.line, "功能需求：至少写一条 `### FR-1 <名称>`")
         return
+    seen = set()
     for line, title, lines in reqs:
+        number = re.match(r"^FR-\d+", title).group(0)
+        if number in seen:
+            ctx.issue(art, line, f"功能需求编号重复：{number}")
+        seen.add(number)
         text = _lib.block_text(lines)
         if "描述" not in text or "优先级" not in text:
             ctx.issue(art, line, f"{title} 缺少「描述」或「优先级」")

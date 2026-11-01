@@ -33,7 +33,12 @@ def _cases(ctx, art) -> list:
         ctx.issues, art, table, ["编号", "对应验收标准", "类型", "命令", "结果", "证据"], "用例与结果"
     )
     failures = []
+    seen = set()
     for row in rows:
+        number = table.cell(row, "编号")
+        if number in seen:
+            ctx.issue(art, row.line, f"用例编号重复：{number}")
+        seen.add(number)
         result = table.cell(row, "结果")
         if result not in RESULT_VALUES:
             ctx.issue(art, row.line, f"结果列只能填 通过/失败，当前为 `{result}`")
@@ -57,7 +62,9 @@ def _failures(ctx, art, failures: list) -> None:
         return
     if len(table.rows) < len(failures):
         ctx.issue(art, table.line, f"失败用例 {len(failures)} 个，失败与修复只记录了 {len(table.rows)} 行")
-    for row in table.rows:
+    rows = _lib.rows_where_filled(ctx.issues, art, table,
+                                  ["用例", "失败原因", "修复方式", "复验结果"], "失败与修复")
+    for row in rows:
         if table.cell(row, "复验结果") != "通过":
             ctx.issue(art, row.line, "失败用例必须有复验，且复验结果填「通过」")
 
@@ -78,30 +85,58 @@ def _matrix(ctx, art) -> dict[str, str]:
     if table is None:
         return {}
     mapping = {}
-    for row in table.rows:
+    rows = _lib.rows_where_filled(ctx.issues, art, table,
+                                  ["验收标准", "是否有已执行用例", "依据用例"], "矩阵审计")
+    case_sec = art.section("用例与结果")
+    case_table = case_sec.tables()[0] if case_sec and case_sec.tables() else None
+    cases = dict(getattr(ctx, 'external_cases', {}))
+    if case_table:
+        cases.update({case_table.cell(r, "编号"): {
+            'result': case_table.cell(r, '结果'),
+            'acs': set(split_refs(case_table.cell(r, '对应验收标准'))),
+        } for r in case_table.rows})
+    for row in rows:
         ac = table.cell(row, "验收标准")
         flag = table.cell(row, "是否有已执行用例")
-        if not ac:
-            continue
+        if ac in mapping:
+            ctx.issue(art, row.line, f"矩阵审计验收标准重复：{ac}")
         mapping[ac] = flag
         if flag not in ("是", "否"):
             ctx.issue(art, row.line, f"「是否有已执行用例」只能填 是/否，当前为 `{flag}`")
         elif flag == "否":
             ctx.issue(art, row.line, f"验收标准 {ac} 没有已执行的用例（跳过不算覆盖）")
+        references = split_refs(table.cell(row, "依据用例"))
+        if not references:
+            ctx.issue(art, row.line, f"{ac} 没有有效的依据用例编号")
+        for number in references:
+            case = cases.get(number)
+            if case is None:
+                ctx.issue(art, row.line, f"{ac} 引用的用例不存在：{number}")
+            elif case['result'] != "通过":
+                ctx.issue(art, row.line, f"{ac} 的依据用例 {number} 未通过")
+            elif ac not in case['acs']:
+                ctx.issue(art, row.line, f"依据用例 {number} 没有覆盖 {ac}")
 
     requirements = ctx.art("requirements")
-    if requirements is None:
+    if requirements is None or (requirements.is_na() and not getattr(ctx, 'acceptance_ids', set())):
         return mapping
     req_sec = requirements.section("验收标准")
-    if req_sec is None or not req_sec.tables():
+    if not hasattr(ctx, 'acceptance_ids') and (req_sec is None or not req_sec.tables()):
         return mapping
-    for row in req_sec.tables()[0].rows:
-        ac = req_sec.tables()[0].cell(row, "编号")
-        if not ac:
-            continue
+    known = ctx.acceptance_ids if hasattr(ctx, 'acceptance_ids') else {
+        req_sec.tables()[0].cell(row, '编号') for row in req_sec.tables()[0].rows
+        if req_sec.tables()[0].cell(row, '编号')
+    }
+    for ac in known:
         if ac not in mapping:
             ctx.issue(art, sec.line, f"矩阵审计缺少验收标准 {ac}（来自 01 需求）")
+    for ac in mapping.keys() - known:
+        ctx.issue(art, sec.line, f"矩阵审计引用未知验收标准：{ac}")
     return mapping
+
+
+def split_refs(value: str) -> list[str]:
+    return [v.strip("` ") for v in re.split(r"[、,，;；\s]+", value) if v.strip("` ")]
 
 
 def _uncovered(ctx, art) -> None:
@@ -116,9 +151,9 @@ def _conclusion(ctx, art, failures: list) -> None:
     sec = _lib.section_ok(ctx.issues, art, "结论")
     if sec is None:
         return
-    match = re.search(r"结论[:：]\s*(可发布|不可发布)", sec.text)
-    if not match:
+    value = _lib.verdict(art, "结论", ("可发布", "不可发布"))
+    if value is None:
         ctx.issue(art, sec.line, "结论必须写明「可发布」或「不可发布」")
         return
-    if match.group(1) == "可发布" and failures:
+    if value == "可发布" and failures:
         ctx.issue(art, sec.line, f"存在 {len(failures)} 个失败用例，不能判定为可发布")

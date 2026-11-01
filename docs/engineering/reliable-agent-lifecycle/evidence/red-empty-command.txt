@@ -1,0 +1,16 @@
+..........................F........................
+======================================================================
+FAIL: test_empty_test_command_cannot_borrow_next_line (test_regressions.RegressionTest.test_empty_test_command_cannot_borrow_next_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_regressions.py", line 48, in test_empty_test_command_cannot_borrow_next_line
+    self.assert_blocked("--stage", "05", message="测试命令")
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 05 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpxinssra3/run
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.150s
+
+FAILED (failures=1)

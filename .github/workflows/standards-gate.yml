@@ -8,6 +8,13 @@ on:
       - "templates/**"
       - "skills/**"
       - "policies/**"
+      - "scripts/**"
+      - "examples/**"
+      - "AGENTS.md"
+      - "README.md"
+      - "CHANGELOG.md"
+      - "THIRD_PARTY_NOTICES.md"
+      - ".github/workflows/standards-gate.yml"
   workflow_dispatch:
 
 jobs:
@@ -28,18 +35,21 @@ jobs:
         run: python3 -m unittest discover gates/tests -v
 
       - name: 校验本次改动涉及的运行目录
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -euo pipefail
-          base="${{ github.event.pull_request.base.sha }}"
+          base="${BASE_SHA:-}"
           if [ -z "${base:-}" ]; then
-            echo "非 PR 触发，跳过运行目录校验"
-            exit 0
+            : > /tmp/engineering-changed-paths
+            if [ -d docs/engineering ]; then
+              find docs/engineering -type f -print0 > /tmp/engineering-changed-paths
+            fi
+          else
+            git diff --name-only -z "$base" HEAD -- docs/engineering/ > /tmp/engineering-changed-paths
           fi
-          mapfile -t dirs < <(
-            git diff --name-only "$base" HEAD -- 'docs/engineering/*' \
-              | awk -F/ 'NF>=3 {print $1"/"$2"/"$3}' \
-              | sort -u
-          )
+          python3 gates/changed_runs.py < /tmp/engineering-changed-paths > /tmp/engineering-run-dirs
+          mapfile -t dirs < /tmp/engineering-run-dirs
           if [ "${#dirs[@]}" -eq 0 ]; then
             echo "本次 PR 未改动 docs/engineering/，跳过"
             exit 0
@@ -52,7 +62,7 @@ jobs:
             fi
             echo "== 校验 $d"
             echo "### $d" >> "$GITHUB_STEP_SUMMARY"
-            if python3 gates/run.py "$d" --all; then
+            if python3 gates/run.py "$d" --delivery; then
               echo "- ✅ 通过" >> "$GITHUB_STEP_SUMMARY"
             else
               echo "- ❌ 未通过（见日志）" >> "$GITHUB_STEP_SUMMARY"
@@ -62,4 +72,6 @@ jobs:
           exit $fail
 
       - name: 校验示例样例
-        run: python3 gates/run.py examples/sample-run --all
+        run: |
+          python3 gates/run.py examples/sample-run --all
+          python3 gates/run.py examples/modular-run --all

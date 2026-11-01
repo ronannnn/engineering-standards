@@ -1,0 +1,590 @@
+基线提交：4cd2926fe4dbfa1c659104003ef9b5c7318b955a
+命令：python3 -m unittest discover gates/tests
+输入：基线仓库加本次新增回归/文档契约测试，不含修复代码
+退出码：1
+
+FFF...................Fusage: python3 -m unittest [-h] [--all | --stage STAGE | --next] run_dir
+python3 -m unittest: error: unrecognized arguments: --delivery
+Eusage: python3 -m unittest [-h] [--all | --stage STAGE | --next] run_dir
+python3 -m unittest: error: unrecognized arguments: --delivery
+Eusage: python3 -m unittest [-h] [--all | --stage STAGE | --next] run_dir
+python3 -m unittest: error: unrecognized arguments: --delivery
+EFFFFF.EEEEFE.FEFFEFEFFFFFFFFFFF
+======================================================================
+ERROR: test_delivery_scope_accepts_draft_retro (test_regressions.RegressionTest.test_delivery_scope_accepts_draft_retro)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 154, in test_delivery_scope_accepts_draft_retro
+    code, output = run_gate(self.fixture.dir, "--delivery")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 119, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_delivery_scope_does_not_require_retro (test_regressions.RegressionTest.test_delivery_scope_does_not_require_retro)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 148, in test_delivery_scope_does_not_require_retro
+    code, output = run_gate(self.fixture.dir, "--delivery")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 119, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_delivery_scope_requires_final_signoff (test_regressions.RegressionTest.test_delivery_scope_requires_final_signoff)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 160, in test_delivery_scope_requires_final_signoff
+    self.assert_blocked("--delivery", message="尚未冻结")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 119, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_frontmatter_errors_are_diagnostics (test_regressions.RegressionTest.test_frontmatter_errors_are_diagnostics) (text='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 119, in test_frontmatter_errors_are_diagnostics
+    self.assert_blocked("--stage", "01", message="frontmatter")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 135, in main
+    load(ctx)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 52, in load
+    art = _lib.check_file(ctx.issues, ctx.run_dir, entry)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 225, in check_file
+    return Artifact(path, entry)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 141, in __init__
+    self._parse_sections()
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 171, in _parse_sections
+    for i in range(self.body_start - 1, len(self.lines)):
+                   ^^^^^^^^^^^^^^^
+AttributeError: 'Artifact' object has no attribute 'body_start'
+
+======================================================================
+ERROR: test_frontmatter_errors_are_diagnostics (test_regressions.RegressionTest.test_frontmatter_errors_are_diagnostics) (text='产物: requirements\n阶段: 01-需求分析\n编')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 119, in test_frontmatter_errors_are_diagnostics
+    self.assert_blocked("--stage", "01", message="frontmatter")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 135, in main
+    load(ctx)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 52, in load
+    art = _lib.check_file(ctx.issues, ctx.run_dir, entry)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 225, in check_file
+    return Artifact(path, entry)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 141, in __init__
+    self._parse_sections()
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 171, in _parse_sections
+    for i in range(self.body_start - 1, len(self.lines)):
+                   ^^^^^^^^^^^^^^^
+AttributeError: 'Artifact' object has no attribute 'body_start'
+
+======================================================================
+ERROR: test_frontmatter_errors_are_diagnostics (test_regressions.RegressionTest.test_frontmatter_errors_are_diagnostics) (text='---\n产物: requirements\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 119, in test_frontmatter_errors_are_diagnostics
+    self.assert_blocked("--stage", "01", message="frontmatter")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 135, in main
+    load(ctx)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 52, in load
+    art = _lib.check_file(ctx.issues, ctx.run_dir, entry)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 225, in check_file
+    return Artifact(path, entry)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 141, in __init__
+    self._parse_sections()
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 171, in _parse_sections
+    for i in range(self.body_start - 1, len(self.lines)):
+                   ^^^^^^^^^^^^^^^
+AttributeError: 'Artifact' object has no attribute 'body_start'
+
+======================================================================
+ERROR: test_frontmatter_errors_are_diagnostics (test_regressions.RegressionTest.test_frontmatter_errors_are_diagnostics) (text='---\n产物: requirements\n阶段: 01-需求')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 119, in test_frontmatter_errors_are_diagnostics
+    self.assert_blocked("--stage", "01", message="frontmatter")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 135, in main
+    load(ctx)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 52, in load
+    art = _lib.check_file(ctx.issues, ctx.run_dir, entry)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 225, in check_file
+    return Artifact(path, entry)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 141, in __init__
+    self._parse_sections()
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 171, in _parse_sections
+    for i in range(self.body_start - 1, len(self.lines)):
+                   ^^^^^^^^^^^^^^^
+AttributeError: 'Artifact' object has no attribute 'body_start'
+
+======================================================================
+ERROR: test_future_malformed_artifact_does_not_block_stage (test_regressions.RegressionTest.test_future_malformed_artifact_does_not_block_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 143, in test_future_malformed_artifact_does_not_block_stage
+    code, output = run_gate(self.fixture.dir, "--stage", "01")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 135, in main
+    load(ctx)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 52, in load
+    art = _lib.check_file(ctx.issues, ctx.run_dir, entry)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 225, in check_file
+    return Artifact(path, entry)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 141, in __init__
+    self._parse_sections()
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 171, in _parse_sections
+    for i in range(self.body_start - 1, len(self.lines)):
+                   ^^^^^^^^^^^^^^^
+AttributeError: 'Artifact' object has no attribute 'body_start'
+
+======================================================================
+ERROR: test_invalid_utf8_is_diagnostic (test_regressions.RegressionTest.test_invalid_utf8_is_diagnostic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 124, in test_invalid_utf8_is_diagnostic
+    self.assert_blocked("--all", message="读取")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 135, in main
+    load(ctx)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 52, in load
+    art = _lib.check_file(ctx.issues, ctx.run_dir, entry)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 225, in check_file
+    return Artifact(path, entry)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 132, in __init__
+    raw = path.read_text(encoding="utf-8")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1028, in read_text
+    return f.read()
+           ^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+
+======================================================================
+ERROR: test_missing_failure_columns_do_not_crash (test_regressions.RegressionTest.test_missing_failure_columns_do_not_crash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 42, in column
+    return self.header.index(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: '复验结果' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 64, in test_missing_failure_columns_do_not_crash
+    self.assert_blocked("--stage", "06", message="复验结果")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 151, in main
+    validate_artifact(ctx, entry)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 80, in validate_artifact
+    human_required = module.check(ctx, art)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/gate06_test_report.py", line 17, in check
+    _failures(ctx, art, failures)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/gate06_test_report.py", line 61, in _failures
+    if table.cell(row, "复验结果") != "通过":
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 47, in cell
+    idx = self.column(name)
+          ^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 44, in column
+    raise KeyError(name)
+KeyError: '复验结果'
+
+======================================================================
+ERROR: test_missing_matrix_columns_do_not_crash (test_regressions.RegressionTest.test_missing_matrix_columns_do_not_crash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 42, in column
+    return self.header.index(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: '验收标准' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 59, in test_missing_matrix_columns_do_not_crash
+    self.assert_blocked("--stage", "06", message="缺少列")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 22, in assert_blocked
+    code, output = run_gate(self.fixture.dir, *args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 151, in main
+    validate_artifact(ctx, entry)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/run.py", line 80, in validate_artifact
+    human_required = module.check(ctx, art)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/gate06_test_report.py", line 19, in check
+    _matrix(ctx, art)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/gate06_test_report.py", line 82, in _matrix
+    ac = table.cell(row, "验收标准")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 47, in cell
+    idx = self.column(name)
+          ^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/_lib.py", line 44, in column
+    raise KeyError(name)
+KeyError: '验收标准'
+
+======================================================================
+FAIL: test_lifecycle_guides_ship_with_the_standard (test_document_contracts.DocumentContractTest.test_lifecycle_guides_ship_with_the_standard) (name='project-context.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_document_contracts.py", line 40, in test_lifecycle_guides_ship_with_the_standard
+    self.assertTrue((ROOT / "policies" / name).is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_lifecycle_guides_ship_with_the_standard (test_document_contracts.DocumentContractTest.test_lifecycle_guides_ship_with_the_standard) (name='lifecycle.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_document_contracts.py", line 40, in test_lifecycle_guides_ship_with_the_standard
+    self.assertTrue((ROOT / "policies" / name).is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_lifecycle_guides_ship_with_the_standard (test_document_contracts.DocumentContractTest.test_lifecycle_guides_ship_with_the_standard) (name='workflow-evaluation.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_document_contracts.py", line 40, in test_lifecycle_guides_ship_with_the_standard
+    self.assertTrue((ROOT / "policies" / name).is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_real_paths_only_and_deleted_paths_are_ignored (test_regressions.ChangedRunsTest.test_real_paths_only_and_deleted_paths_are_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 194, in test_real_paths_only_and_deleted_paths_are_ignored
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 2 != 0 : /Library/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python: can't open file '/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/changed_runs.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_duplicate_case_id_is_blocked (test_regressions.RegressionTest.test_duplicate_case_id_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 55, in test_duplicate_case_id_is_blocked
+    self.assert_blocked("--stage", "06", message="重复")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpv8z50ijf/run
+
+
+======================================================================
+FAIL: test_empty_reference_list_is_not_coverage (test_regressions.RegressionTest.test_empty_reference_list_is_not_coverage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 68, in test_empty_reference_list_is_not_coverage
+    self.assert_blocked("--stage", "06", message="依据用例")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp4_r7ow7z/run
+
+
+======================================================================
+FAIL: test_engineering_failure_prevents_delivery (test_regressions.RegressionTest.test_engineering_failure_prevents_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 77, in test_engineering_failure_prevents_delivery
+    self.assert_blocked("--all", message="安全扫描")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp5hq7zvjq/run
+
+
+======================================================================
+FAIL: test_evidence_values_cannot_be_empty (test_regressions.RegressionTest.test_evidence_values_cannot_be_empty) (field='命令')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 41, in test_evidence_values_cannot_be_empty
+    self.assert_blocked("--stage", "05", message=field)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpn4d16wp_/run
+
+
+======================================================================
+FAIL: test_evidence_values_cannot_be_empty (test_regressions.RegressionTest.test_evidence_values_cannot_be_empty) (field='输出摘要')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 41, in test_evidence_values_cannot_be_empty
+    self.assert_blocked("--stage", "05", message=field)
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpn4d16wp_/run
+
+
+======================================================================
+FAIL: test_frontmatter_errors_are_diagnostics (test_regressions.RegressionTest.test_frontmatter_errors_are_diagnostics) (text='---\n产物: requirements\n阶段: 01-需求')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 119, in test_frontmatter_errors_are_diagnostics
+    self.assert_blocked("--stage", "01", message="frontmatter")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmph13o6z1q/run
+
+
+======================================================================
+FAIL: test_invalid_ancestor_signoff_prevents_stage (test_regressions.RegressionTest.test_invalid_ancestor_signoff_prevents_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 108, in test_invalid_ancestor_signoff_prevents_stage
+    self.assert_blocked("--stage", "05", message="签收")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpcthm905f/run
+
+
+======================================================================
+FAIL: test_matrix_case_must_cover_the_same_ac (test_regressions.RegressionTest.test_matrix_case_must_cover_the_same_ac)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 51, in test_matrix_case_must_cover_the_same_ac
+    self.assert_blocked("--stage", "06", message="AC-4")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpa9e9c4o8/run
+
+
+======================================================================
+FAIL: test_missing_engineering_check_prevents_delivery (test_regressions.RegressionTest.test_missing_engineering_check_prevents_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 82, in test_missing_engineering_check_prevents_delivery
+    self.assert_blocked("--stage", "07", message="构建")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp423qb1hw/run
+
+
+======================================================================
+FAIL: test_missing_matrix_case_is_blocked (test_regressions.RegressionTest.test_missing_matrix_case_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 47, in test_missing_matrix_case_is_blocked
+    self.assert_blocked("--stage", "06", message="T-4")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpp2fppcwd/run
+
+
+======================================================================
+FAIL: test_missing_review_verdict_prevents_delivery (test_regressions.RegressionTest.test_missing_review_verdict_prevents_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 104, in test_missing_review_verdict_prevents_delivery
+    self.assert_blocked("--stage", "07", message="结论")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp707shpg4/run
+
+
+======================================================================
+FAIL: test_na_retro_cannot_be_machine_approved (test_regressions.RegressionTest.test_na_retro_cannot_be_machine_approved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 73, in test_na_retro_cannot_be_machine_approved
+    self.assert_blocked("--all", message="人签收")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpm5fuj766/run
+
+
+======================================================================
+FAIL: test_next_rejects_broken_frozen_content (test_regressions.RegressionTest.test_next_rejects_broken_frozen_content)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 132, in test_next_rejects_broken_frozen_content
+    self.assert_blocked("--next", message="GREEN")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 8 个阶段全部冻结，没有待办
+
+
+======================================================================
+FAIL: test_next_rejects_invalid_frozen_signature (test_regressions.RegressionTest.test_next_rejects_invalid_frozen_signature)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 128, in test_next_rejects_invalid_frozen_signature
+    self.assert_blocked("--next", message="签收")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 8 个阶段全部冻结，没有待办
+
+
+======================================================================
+FAIL: test_pending_delivery_can_be_content_checked_without_fake_acceptance (test_regressions.RegressionTest.test_pending_delivery_can_be_content_checked_without_fake_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 167, in test_pending_delivery_can_be_content_checked_without_fake_acceptance
+    self.assertEqual(code, 0, output)
+AssertionError: 1 != 0 : 07-delivery.md:66: 交付确认缺少「验收人」
+07-delivery.md:66: 交付确认缺少「确认时间」
+07-delivery.md:66: 确认时间必须是 YYYY-MM-DD，当前为 `-`
+
+✗ 共 3 个问题
+
+
+======================================================================
+FAIL: test_red_cannot_borrow_green_fields (test_regressions.RegressionTest.test_red_cannot_borrow_green_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 31, in test_red_cannot_borrow_green_fields
+    self.assert_blocked("--stage", "05", message="RED")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp1zsjyai0/run
+
+
+======================================================================
+FAIL: test_stage_does_not_require_future_artifacts (test_regressions.RegressionTest.test_stage_does_not_require_future_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 139, in test_stage_does_not_require_future_artifacts
+    self.assertEqual(code, 0, output)
+AssertionError: 1 != 0 : 02-design.md:0: 缺少产物文件（阶段 02）
+03-ui-design.md:0: 缺少产物文件（阶段 03）
+04-tasks.md:0: 缺少产物文件（阶段 04）
+05-implementation.md:0: 缺少产物文件（阶段 05）
+06-test-report.md:0: 缺少产物文件（阶段 06）
+06-review-report.md:0: 缺少产物文件（阶段 06）
+07-delivery.md:0: 缺少产物文件（阶段 07）
+08-retro.md:0: 缺少产物文件（阶段 08）
+
+✗ 共 8 个问题
+
+
+======================================================================
+FAIL: test_unexplained_skip_prevents_delivery (test_regressions.RegressionTest.test_unexplained_skip_prevents_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 86, in test_unexplained_skip_prevents_delivery
+    self.assert_blocked("--stage", "07", message="不适用")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmphlug4jmg/run
+
+
+======================================================================
+FAIL: test_unfrozen_review_prevents_delivery (test_regressions.RegressionTest.test_unfrozen_review_prevents_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 100, in test_unfrozen_review_prevents_delivery
+    self.assert_blocked("--stage", "07", message="06-review-report.md")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpx5w_w6pg/run
+
+
+======================================================================
+FAIL: test_unknown_compliance_cannot_be_approved (test_regressions.RegressionTest.test_unknown_compliance_cannot_be_approved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 176, in test_unknown_compliance_cannot_be_approved
+    self.assert_blocked("--stage", "06", message="无法判定")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpp1atlsyj/run
+
+
+======================================================================
+FAIL: test_unselected_template_verdict_is_not_a_decision (test_regressions.RegressionTest.test_unselected_template_verdict_is_not_a_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 172, in test_unselected_template_verdict_is_not_a_decision
+    self.assert_blocked("--stage", "06", message="结论")
+  File "/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp52e0798l/gates/tests/test_regressions.py", line 23, in assert_blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpwm7pbavv/run
+
+
+----------------------------------------------------------------------
+Ran 50 tests in 0.136s
+
+FAILED (failures=25, errors=11)

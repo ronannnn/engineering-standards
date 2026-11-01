@@ -1,0 +1,2 @@
+命令：python3 gates/run.py examples/sample-run --all
+✓ 全链通过：examples/sample-run

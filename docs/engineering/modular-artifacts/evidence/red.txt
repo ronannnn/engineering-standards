@@ -1,0 +1,442 @@
+实现模块功能前运行：python3 -m unittest discover gates/tests
+....................FF.FFFusage: python3 -m unittest [-h] [--all | --delivery | --stage STAGE | --next]
+                           run_dir
+python3 -m unittest: error: unrecognized arguments: --module orders/refund
+EFFFFF.FFFFusage: python3 -m unittest [-h] [--all | --delivery | --stage STAGE | --next]
+                           run_dir
+python3 -m unittest: error: unrecognized arguments: --module users/access
+EFusage: python3 -m unittest [-h] [--all | --delivery | --stage STAGE | --next]
+                           run_dir
+python3 -m unittest: error: unrecognized arguments: --module users
+Eusage: python3 -m unittest [-h] [--all | --delivery | --stage STAGE | --next]
+                           run_dir
+python3 -m unittest: error: unrecognized arguments: --module orders/refund
+EFFFFFFFusage: python3 -m unittest [-h] [--all | --delivery | --stage STAGE | --next]
+                           run_dir
+python3 -m unittest: error: unrecognized arguments: --module users/access
+EFusage: python3 -m unittest [-h] [--all | --delivery | --stage STAGE | --next]
+                           run_dir
+python3 -m unittest: error: unrecognized arguments: --module unknown
+EF................................
+======================================================================
+ERROR: test_dependency_same_stage_must_be_frozen (test_modular.ModularTest.test_dependency_same_stage_must_be_frozen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 141, in test_dependency_same_stage_must_be_frozen
+    self.blocked('--module', 'orders/refund', '--stage', '05', contains='依赖模块')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 65, in blocked
+    code, output = self.gate(*args)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 58, in gate
+    return fixtures.run_gate(self.root, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 138, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_module_retro_requires_root_delivery (test_modular.ModularTest.test_module_retro_requires_root_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 196, in test_module_retro_requires_root_delivery
+    self.blocked('--module', 'users/access', '--stage', '08', contains='冻结')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 65, in blocked
+    code, output = self.gate(*args)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 58, in gate
+    return fixtures.run_gate(self.root, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 138, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_module_selector_and_unrelated_future_draft (test_modular.ModularTest.test_module_selector_and_unrelated_future_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 145, in test_module_selector_and_unrelated_future_draft
+    self.passed('--module', 'users', '--stage', '06')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 61, in passed
+    code, output = self.gate(*args)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 58, in gate
+    return fixtures.run_gate(self.root, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 138, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_module_selector_includes_dependencies (test_modular.ModularTest.test_module_selector_includes_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 151, in test_module_selector_includes_dependencies
+    self.blocked('--module', 'orders/refund', '--stage', '06', contains='users/access')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 65, in blocked
+    code, output = self.gate(*args)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 58, in gate
+    return fixtures.run_gate(self.root, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 138, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_unfrozen_common_design_blocks_module (test_modular.ModularTest.test_unfrozen_common_design_blocks_module)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 135, in test_unfrozen_common_design_blocks_module
+    self.blocked('--module', 'users/access', '--stage', '04', contains='冻结')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 65, in blocked
+    code, output = self.gate(*args)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 58, in gate
+    return fixtures.run_gate(self.root, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 138, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_unknown_module_selector (test_modular.ModularTest.test_unknown_module_selector)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 154, in test_unknown_module_selector
+    self.blocked('--module', 'unknown', '--stage', '01', contains='unknown')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 65, in blocked
+    code, output = self.gate(*args)
+                   ^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 58, in gate
+    return fixtures.run_gate(self.root, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 138, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 1899, in parse_args
+    self.error(msg)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2672, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/argparse.py", line 2659, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+FAIL: test_archive_requires_module_retro_but_delivery_does_not (test_modular.ModularTest.test_archive_requires_module_retro_but_delivery_does_not)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 192, in test_archive_requires_module_retro_but_delivery_does_not
+    self.blocked('--all', contains='modules/users/access/08-retro.md')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp6qv1veie/run
+
+
+======================================================================
+FAIL: test_changed_common_revision_requires_review (test_modular.ModularTest.test_changed_common_revision_requires_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 131, in test_changed_common_revision_requires_review
+    self.blocked('--stage', '05', contains='基线')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 05 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp8kuxjyyo/run
+
+
+======================================================================
+FAIL: test_delivery_missing_module_snapshot (test_modular.ModularTest.test_delivery_missing_module_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 179, in test_delivery_missing_module_snapshot
+    self.blocked('--delivery', contains='users/access')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 合并前检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp_cwbm8t8/run
+
+
+======================================================================
+FAIL: test_delivery_snapshot_must_match (test_modular.ModularTest.test_delivery_snapshot_must_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 175, in test_delivery_snapshot_must_match
+    self.blocked('--delivery', contains='修订')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 合并前检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp8j_cvi_7/run
+
+
+======================================================================
+FAIL: test_dependency_cycle (test_modular.ModularTest.test_dependency_cycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 114, in test_dependency_cycle
+    self.blocked('--stage', '01', contains='循环')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpo5dfs0o2/run
+
+
+======================================================================
+FAIL: test_draft_module_report_blocks_delivery (test_modular.ModularTest.test_draft_module_report_blocks_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 183, in test_draft_module_report_blocks_delivery
+    self.blocked('--delivery', contains='modules/users/access/06-review-report.md')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 合并前检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp_7g8c37g/run
+
+
+======================================================================
+FAIL: test_duplicate_unknown_and_unsafe_modules (test_modular.ModularTest.test_duplicate_unknown_and_unsafe_modules) (value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 102, in test_duplicate_unknown_and_unsafe_modules
+    self.blocked('--stage', '01', contains='modules.json')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpgl1dk5vk/run
+
+
+======================================================================
+FAIL: test_duplicate_unknown_and_unsafe_modules (test_modular.ModularTest.test_duplicate_unknown_and_unsafe_modules) (value=[{'path': 'users/access', 'depends_on': [], 'baseline': {'01': 1, '02': 1, '03': 1}}, {'path': 'users/access', 'depends_on': [], 'baseline': {'01': 1, '02': 1, '03': 1}}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 102, in test_duplicate_unknown_and_unsafe_modules
+    self.blocked('--stage', '01', contains='modules.json')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpgl1dk5vk/run
+
+
+======================================================================
+FAIL: test_duplicate_unknown_and_unsafe_modules (test_modular.ModularTest.test_duplicate_unknown_and_unsafe_modules) (value=[{'path': '../outside', 'baseline': {'01': 1, '02': 1, '03': 1}}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 102, in test_duplicate_unknown_and_unsafe_modules
+    self.blocked('--stage', '01', contains='modules.json')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpgl1dk5vk/run
+
+
+======================================================================
+FAIL: test_duplicate_unknown_and_unsafe_modules (test_modular.ModularTest.test_duplicate_unknown_and_unsafe_modules) (value=[{'path': '/absolute', 'baseline': {'01': 1, '02': 1, '03': 1}}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 102, in test_duplicate_unknown_and_unsafe_modules
+    self.blocked('--stage', '01', contains='modules.json')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpgl1dk5vk/run
+
+
+======================================================================
+FAIL: test_manifest_json_errors_are_diagnostic (test_modular.ModularTest.test_manifest_json_errors_are_diagnostic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 119, in test_manifest_json_errors_are_diagnostic
+    self.blocked('--stage', '01', contains='modules.json')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpbjhq2_4e/run
+
+
+======================================================================
+FAIL: test_missing_manifest_is_blocked_if_modules_exist (test_modular.ModularTest.test_missing_manifest_is_blocked_if_modules_exist)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 91, in test_missing_manifest_is_blocked_if_modules_exist
+    self.blocked('--delivery', contains='modules.json')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 合并前检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp9f8gghjz/run
+
+
+======================================================================
+FAIL: test_missing_module_file_is_not_ignored (test_modular.ModularTest.test_missing_module_file_is_not_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 81, in test_missing_module_file_is_not_ignored
+    self.blocked('--delivery', contains='modules/users/access/05-implementation.md')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 合并前检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp_o0yyoz5/run
+
+
+======================================================================
+FAIL: test_module_error_has_full_path (test_modular.ModularTest.test_module_error_has_full_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 77, in test_module_error_has_full_path
+    self.blocked('--stage', '01', contains='modules/users/access/01-requirements.md')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp2rmb1vq6/run
+
+
+======================================================================
+FAIL: test_module_review_rejection_blocks_release (test_modular.ModularTest.test_module_review_rejection_blocks_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 187, in test_module_review_rejection_blocks_release
+    self.blocked('--delivery', contains='users/access')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 合并前检查通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpcqbp8t4j/run
+
+
+======================================================================
+FAIL: test_next_rejects_bad_frozen_module (test_modular.ModularTest.test_next_rejects_bad_frozen_module)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 200, in test_next_rejects_bad_frozen_module
+    self.blocked('--next', contains='users/access')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 8 个阶段全部冻结且校验有效，没有待办
+
+
+======================================================================
+FAIL: test_root_matrix_cannot_borrow_wrong_module_case (test_modular.ModularTest.test_root_matrix_cannot_borrow_wrong_module_case)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 163, in test_root_matrix_cannot_borrow_wrong_module_case
+    self.blocked('--stage', '06', contains='users/access#AC-4')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 06 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmp6vtfvegi/run
+
+
+======================================================================
+FAIL: test_root_matrix_must_include_module_acceptance (test_modular.ModularTest.test_root_matrix_must_include_module_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 158, in test_root_matrix_must_include_module_acceptance
+    self.blocked('--stage', '06', contains='users/access#AC-4')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 06 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpjbgdo78h/run
+
+
+======================================================================
+FAIL: test_root_plan_must_include_module_acceptance (test_modular.ModularTest.test_root_plan_must_include_module_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 167, in test_root_plan_must_include_module_acceptance
+    self.blocked('--stage', '04', contains='users/access#AC-4')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 04 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpkx2m4ytr/run
+
+
+======================================================================
+FAIL: test_root_plan_task_reference_must_exist (test_modular.ModularTest.test_root_plan_task_reference_must_exist)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 171, in test_root_plan_task_reference_must_exist
+    self.blocked('--stage', '04', contains='任务 999')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 04 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpedx5l4o8/run
+
+
+======================================================================
+FAIL: test_symlink_escape (test_modular.ModularTest.test_symlink_escape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 127, in test_symlink_escape
+    self.blocked('--stage', '01', contains='路径')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpryevla6v/run
+
+
+======================================================================
+FAIL: test_undeclared_artifact_is_blocked (test_modular.ModularTest.test_undeclared_artifact_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 87, in test_undeclared_artifact_is_blocked
+    self.blocked('--all', contains='未登记')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 全链通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpd_2xsvbo/run
+
+
+======================================================================
+FAIL: test_unknown_dependency (test_modular.ModularTest.test_unknown_dependency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 108, in test_unknown_dependency
+    self.blocked('--stage', '01', contains='unknown')
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 66, in blocked
+    self.assertEqual(code, 1, output)
+AssertionError: 0 != 1 : ✓ 阶段 01 自检通过：/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmprotxzu41/run
+
+
+======================================================================
+FAIL: test_initialize_nested_module_and_preserve_existing (test_modular.ModuleScaffoldTest.test_initialize_nested_module_and_preserve_existing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_modular.py", line 214, in test_initialize_nested_module_and_preserve_existing
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 2 != 0 : /Library/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python: can't open file '/Users/ruonanchen/Desktop/engineering-standards/scripts/init-module.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 81 tests in 0.363s
+
+FAILED (failures=24, errors=6)

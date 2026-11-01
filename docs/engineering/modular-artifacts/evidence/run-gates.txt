@@ -1,0 +1,1 @@
+✓ 阶段 07 自检通过：docs/engineering/modular-artifacts

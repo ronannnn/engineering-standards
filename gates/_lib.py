@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
 import spec
@@ -44,6 +44,8 @@ class Table:
             raise KeyError(name)
 
     def cell(self, row: Row, name: str) -> str:
+        if name not in self.header:
+            return ""
         idx = self.column(name)
         if idx >= len(row.cells):
             return ""
@@ -137,8 +139,10 @@ class Artifact:
         self.fm_error: tuple[int, str] | None = None
         self.sections: dict[str, Section] = {}
         self.duplicate_sections: list[tuple[int, str]] = []
+        self.body_start = len(self.lines) + 1
         self._parse_frontmatter()
-        self._parse_sections()
+        if self.fm_error is None:
+            self._parse_sections()
 
     # ---------- 解析 ----------
     def _parse_frontmatter(self) -> None:
@@ -161,6 +165,9 @@ class Artifact:
                 self.fm_error = (i + 1, f"frontmatter 行格式错误（缺少冒号）：{text.strip()}")
                 return
             key, value = text.split(":", 1)
+            if not key.strip() or key.strip() in self.fm:
+                self.fm_error = (i + 1, f"frontmatter 字段为空或重复：{key.strip()}")
+                return
             self.fm[key.strip()] = value.strip()
             self.fm_lines[key.strip()] = i + 1
         self.body_start = end + 2
@@ -222,7 +229,11 @@ def check_file(issues: list[Issue], run_dir: Path, entry: dict) -> Artifact | No
     if not path.is_file():
         issues.append(Issue(entry["file"], 0, f"缺少产物文件（阶段 {entry['code']}）"))
         return None
-    return Artifact(path, entry)
+    try:
+        return Artifact(path, entry)
+    except (OSError, UnicodeError) as exc:
+        issues.append(Issue(entry["file"], 1, f"无法读取产物：{exc}"))
+        return None
 
 
 def check_frontmatter(issues: list[Issue], art: Artifact) -> None:
@@ -268,22 +279,13 @@ def check_anchors(issues: list[Issue], art: Artifact) -> None:
 
 
 def check_dependency(issues: list[Issue], run_dir: Path, entry: dict, loaded: dict[str, Artifact]) -> None:
-    depends = entry["depends"]
-    if not depends:
-        return
-    path = run_dir / depends
-    if not path.is_file():
-        issues.append(Issue(entry["file"], 0, f"依赖的产物不存在：{depends}"))
-        return
-    art = loaded.get(depends)
-    if art is None:
-        issues.append(Issue(entry["file"], 0, f"依赖的产物未加载：{depends}"))
-        return
-    if art.status() != "已冻结":
-        issues.append(Issue(
-            entry["file"], 0,
-            f"依赖的产物未冻结：{depends} 当前状态 `{art.status() or '未知'}`",
-        ))
+    for depends in spec.dependencies(entry):
+        art = loaded.get(depends)
+        if art is None:
+            issues.append(Issue(entry["file"], 1, f"依赖的产物不存在或无法读取：{depends}"))
+        elif art.status() != "已冻结":
+            issues.append(Issue(entry["file"], 1,
+                                f"依赖的产物未冻结：{depends} 当前状态 `{art.status() or '未知'}`"))
 
 
 def check_status(issues: list[Issue], art: Artifact, human_required: bool | None) -> None:
@@ -320,7 +322,7 @@ def na_check(issues: list[Issue], art: Artifact) -> bool:
     if art.status() != "已冻结":
         issue(issues, art, art.line_of("状态"), "整份不适用的产物也必须冻结后才能进入下一阶段")
         return False
-    if art.signoff() in ("", SIGN_OFF_NA):
+    if art.signoff() in ("", SIGN_OFF_NA, spec.SIGNOFF_MACHINE):
         issue(issues, art, art.line_of("签收"), "整份不适用必须有人签收确认")
     return True
 
@@ -422,6 +424,15 @@ def only_none(text: str) -> bool:
 
 def block_text(lines: list[tuple[int, str]]) -> str:
     return "\n".join(t for _, t in lines).strip()
+
+
+def verdict(art: Artifact, anchor: str, choices: tuple[str, ...]) -> str | None:
+    """只接受整行明确选定的结论，拒绝未选择的模板和多重结论。"""
+    sec = art.section(anchor)
+    if sec is None:
+        return None
+    values = re.findall(r"^\s*(?:-\s*)?结论[:：]\s*(.*?)\s*$", sec.text, re.M)
+    return values[0] if len(values) == 1 and values[0] in choices else None
 
 
 def section_missing_in(issues: list[Issue], art: Artifact, anchor: str) -> None:

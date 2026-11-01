@@ -41,14 +41,19 @@ def _ci(ctx, art) -> None:
         return
     rows = _lib.rows_where_filled(ctx.issues, art, table, ["检查项", "结果", "证据"], "CI 检查结果")
     names = [table.cell(row, "检查项") for row in rows]
-    if "标准门禁" not in names:
-        ctx.issue(art, table.line, "CI 检查结果必须包含一行「标准门禁」（本次门禁的结论）")
+    for name in spec.REQUIRED_CI_CHECKS:
+        if names.count(name) != 1:
+            ctx.issue(art, table.line, f"CI 检查结果必须恰好包含一行「{name}」")
     for row in rows:
         result = table.cell(row, "结果")
         if result not in ("通过", "失败", "跳过"):
             ctx.issue(art, row.line, f"结果列只能填 通过/失败/跳过，当前为 `{result}`")
-        elif result == "通过" and not table.cell(row, "证据"):
-            ctx.issue(art, row.line, "结果为通过时必须有证据（日志或链接）")
+        elif result == "失败":
+            ctx.issue(art, row.line, f"{table.cell(row, '检查项')} 失败，不能交付")
+        elif result == "跳过":
+            evidence = table.cell(row, "证据")
+            if not re.match(r"^不适用[:：]\s*\S.+", evidence):
+                ctx.issue(art, row.line, "跳过检查必须在证据列写 `不适用：<具体理由>`，由交付签收人确认")
     gate_rows = [row for row in rows if table.cell(row, "检查项") == "标准门禁"]
     if gate_rows and table.cell(gate_rows[0], "结果") != "通过":
         ctx.issue(art, gate_rows[0].line, "标准门禁未通过，不能交付")
@@ -111,6 +116,9 @@ def _confirm(ctx, art) -> None:
     sec = _lib.section_ok(ctx.issues, art, "交付确认")
     if sec is None:
         return
+    if art.status() != "已冻结":
+        # 内容自检发生在最终验收之前，允许空置，禁止为了过自检伪造验收。
+        return
     for field in ("验收人", "确认时间"):
         match = re.search(rf"{field}[:：]\s*(\S+)", sec.text)
         if not match or match.group(1) in ("-", "无"):
@@ -121,15 +129,9 @@ def _confirm(ctx, art) -> None:
 
 
 def _upstream_verdicts(ctx, art) -> None:
-    tests = ctx.art("test-report")
-    if tests is not None and tests.status() == "已冻结":
-        sec = tests.section("结论")
-        if sec is not None and "不可发布" in sec.text:
-            ctx.issue(art, art.section("交付确认").line if art.section("交付确认") else 1,
-                      "06 测试报告结论为「不可发布」，不能进入交付")
-    review = ctx.art("review-report")
-    if review is not None and review.status() == "已冻结":
-        sec = review.section("结论")
-        if sec is not None and "需修改" in sec.text:
-            ctx.issue(art, art.section("交付确认").line if art.section("交付确认") else 1,
-                      "06 评审报告结论为「需修改」，不能进入交付")
+    for product, expected in (("test-report", "可发布"), ("review-report", "可合并")):
+        upstream = ctx.art(product)
+        if upstream is None or upstream.status() != "已冻结":
+            ctx.issue(art, 1, f"06 {product} 必须存在且已冻结，不能进入交付")
+        elif _lib.verdict(upstream, "结论", (expected,)) != expected:
+            ctx.issue(art, 1, f"06 {product} 结论必须明确为「{expected}」，不能进入交付")

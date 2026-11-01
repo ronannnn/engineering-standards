@@ -77,4 +77,5 @@ echo
 echo "下一步："
 echo "  1) 在 agent 里说：用 org-requirements 开始处理 $slug"
 echo "  2) 写完一段就跑：python3 gates/run.py docs/engineering/$slug --stage 01"
-echo "  3) 全部完成后跑：python3 gates/run.py docs/engineering/$slug --all"
+echo "  3) 需要拆模块时：python3 scripts/init-module.py docs/engineering/$slug users/access"
+echo "  4) 合并前跑 --delivery，观察复盘完成后跑 --all"
