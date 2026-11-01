@@ -90,7 +90,7 @@ def _compat(ctx, art) -> None:
     if sec is None or _lib.is_section_na(sec):
         return
     if len(sec.text) < 10:
-        ctx.issue(art, sec.first_line(), "兼容性写得太简略：写清 API/客户端/schema/配置的兼容窗口")
+        ctx.issue(art, sec.first_line(), "兼容性写得太简略：说明当前契约与调用方调整；仅有明确要求时填写旧版兼容范围")
 
 
 def _perf_observability(ctx, art) -> None:
