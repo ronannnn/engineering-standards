@@ -1,0 +1,14 @@
+..运行目录不存在：/Users/ruonanchen/Desktop/engineering-standards/examples/requirements-tree
+F.
+======================================================================
+FAIL: test_requirements_tree_example_is_valid_without_future_stages (test_document_contracts.DocumentContractTest.test_requirements_tree_example_is_valid_without_future_stages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_document_contracts.py", line 20, in test_requirements_tree_example_is_valid_without_future_stages
+    self.assertEqual(code, 0, output)
+AssertionError: 2 != 0 :
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.016s
+
+FAILED (failures=1)

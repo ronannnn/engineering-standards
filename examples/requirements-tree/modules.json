@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "modules": [
+    {
+      "path": "skills/search",
+      "depends_on": [],
+      "baseline": {
+        "01": 1,
+        "02": 1,
+        "03": 1
+      }
+    },
+    {
+      "path": "skills/favorites",
+      "depends_on": [],
+      "baseline": {
+        "01": 1,
+        "02": 1,
+        "03": 1
+      }
+    }
+  ]
+}

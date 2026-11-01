@@ -24,6 +24,8 @@
 
 ## 使用注意
 
+需求细分另参考 [OpenSpec 行为规格](https://github.com/Fission-AI/OpenSpec/blob/main/docs/writing-specs.md)、[OpenSpec 审阅顺序](https://github.com/Fission-AI/OpenSpec/blob/main/docs/reviewing-changes.md)、[BMAD V6.12 用户价值分组](https://github.com/bmad-code-org/BMAD-METHOD/blob/bab9082c3e884e0d72c759bcd1a6d90bcc01be84/src/bmm-skills/plan/bmad-create-epics-and-stories/steps/step-02-design-epics.md)、[BMAD 覆盖检查](https://github.com/bmad-code-org/BMAD-METHOD/blob/bab9082c3e884e0d72c759bcd1a6d90bcc01be84/src/bmm-skills/plan/bmad-create-epics-and-stories/steps/step-04-final-validation.md)、[Spec Kit 用户故事模板](https://github.com/github/spec-kit/blob/main/templates/spec-template.md)及[持久化选择](https://github.com/github/spec-kit/blob/main/docs/concepts/spec-persistence.md)、[Superpowers 独立规格与计划](https://github.com/obra/superpowers/blob/main/skills/writing-plans/SKILL.md)。只中文重述方法，没有复制原文、程序或自动归并行为；BMAD 所核对的步骤将故事汇入 epics.md，不将其描述成自动按功能拆目录的实现。需求树和虚构示例沿用本仓库自己的产物契约。
+
 项目接入另参考 [DSH SETUP](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/6337fc823ce20251c8de8085948165c81aaa701e/SETUP.md) 的 Agent 引导与检查交接、[BMAD 接入](https://github.com/bmad-code-org/BMAD-METHOD/blob/main/docs/start/install-bmad.md) 的项目配置分离、[OpenSpec 工具入口](https://github.com/Fission-AI/OpenSpec/blob/main/docs/supported-tools.md)、[Spec Kit 存量项目](https://github.com/github/spec-kit/blob/main/docs/guides/existing-projects.md) 和 [Superpowers 安装说明](https://github.com/obra/superpowers#installation)。仅中文重述接入思路；本仓库 SETUP 的快照路径、流程和自然语言使用约定为本仓库设计，不复制安装脚本或引入上游运行平台。
 
 - 目前仅链接和中文重述，不复制上游正文或代码。

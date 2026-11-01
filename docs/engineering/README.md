@@ -9,3 +9,4 @@
 | agent-task-continuity | 补充完成，待最终验收 | 2026-11-01 |  |
 | project-usage-guide | 说明补充完成，待最终验收 | 2026-11-01 |  |
 | gate-maintenance | 优化完成，待最终验收 | 2026-11-01 |  |
+| requirements-navigation | 规则补充完成，待最终验收 | 2026-11-01 |  |
