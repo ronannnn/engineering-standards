@@ -24,6 +24,47 @@ class RegressionTest(unittest.TestCase):
         if message:
             self.assertIn(message, output)
 
+    def test_new_artifact_uses_its_registered_gate(self):
+        from types import ModuleType
+        from unittest.mock import Mock, patch
+        import spec
+
+        entry = dict(code='09', title='附加检查', product='extra-report',
+                     file='09-extra-report.md', prefix='EXT', depends='08-retro.md',
+                     signoff='auto', na_allowed=False, gate='test_extra_gate')
+        self.fixture.write(entry['file'], '''---
+产物: extra-report
+阶段: 09-附加检查
+编号: EXT-0001
+状态: 草稿
+签收: -
+签收时间: -
+依据: 08-retro.md
+修订: 1
+不适用: -
+---
+## 检查结果
+实际附加校验。
+''')
+        module = ModuleType(entry['gate'])
+        with patch.object(spec, 'ARTIFACTS', [*spec.ARTIFACTS, entry]), patch.dict(
+            spec.STAGE_TITLES, {'09': '附加检查'}
+        ), patch.dict(spec.ANCHORS, {'extra-report': ['检查结果']}), patch.dict(
+            sys.modules, {entry['gate']: module}
+        ):
+            for problem in (None, '自定义检查未通过'):
+                with self.subTest(problem=problem):
+                    def check(ctx, art):
+                        if problem:
+                            ctx.issue(art, 14, problem)
+                        return False
+                    module.check = Mock(side_effect=check)
+                    code, output = run_gate(self.fixture.dir, '--stage', '09')
+                    self.assertEqual(code, 1 if problem else 0, output)
+                    module.check.assert_called_once()
+                    if problem:
+                        self.assertIn('09-extra-report.md:14: ' + problem, output)
+
     def test_next_reads_and_validates_each_artifact_once(self):
         from collections import Counter
         from unittest.mock import patch

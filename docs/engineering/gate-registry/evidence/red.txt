@@ -1,0 +1,39 @@
+...............................................................................EE................
+======================================================================
+ERROR: test_new_artifact_uses_its_registered_gate (test_regressions.RegressionTest.test_new_artifact_uses_its_registered_gate) (problem=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_regressions.py", line 62, in test_new_artifact_uses_its_registered_gate
+    code, output = run_gate(self.fixture.dir, '--stage', '09')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 168, in main
+    validate_artifact(ctx, entry)
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 82, in validate_artifact
+    module = importlib.import_module(MODULE_BY_PRODUCT[entry["product"]])
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'extra-report'
+
+======================================================================
+ERROR: test_new_artifact_uses_its_registered_gate (test_regressions.RegressionTest.test_new_artifact_uses_its_registered_gate) (problem='自定义检查未通过')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_regressions.py", line 62, in test_new_artifact_uses_its_registered_gate
+    code, output = run_gate(self.fixture.dir, '--stage', '09')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_gates.py", line 27, in run_gate
+    code = gate_run.main([str(path), *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 168, in main
+    validate_artifact(ctx, entry)
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/run.py", line 82, in validate_artifact
+    module = importlib.import_module(MODULE_BY_PRODUCT[entry["product"]])
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'extra-report'
+
+----------------------------------------------------------------------
+Ran 96 tests in 1.146s
+
+FAILED (errors=2)

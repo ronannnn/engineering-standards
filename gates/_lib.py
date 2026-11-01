@@ -174,7 +174,6 @@ class Artifact:
 
     def _parse_sections(self) -> None:
         current: tuple[int, str, list[tuple[int, str]]] | None = None
-        end_of_body = len(self.lines) + 1
         for i in range(self.body_start - 1, len(self.lines)):
             text = self.lines[i]
             lineno = i + 1
@@ -377,25 +376,6 @@ def rows_where_filled(issues: list[Issue], art: Artifact, table: Table, columns:
     return filled
 
 
-def heading_level3_titles(sec: Section) -> list[str]:
-    return [text[4:].strip() for _, text, _ in sec.blocks("")]
-
-
-def find_heading(art: Artifact, anchor: str) -> Section | None:
-    return art.section(anchor)
-
-
-def count_h3(sec: Section) -> int:
-    return sum(1 for _, text in sec.lines if text.startswith("### "))
-
-
-def freeze_required_human(art: Artifact) -> bool | None:
-    """返回 True/False 表示是否需要人签收；None 表示由调用方决定。"""
-    if art.spec["signoff"] == "human":
-        return True
-    return None
-
-
 def require_h3(issues: list[Issue], art: Artifact, sec: Section, titles: list[str]) -> dict[str, list[tuple[int, str]]]:
     """要求节内存在指定三级标题，且正文非空。返回 title -> 内容行。"""
     found = {title: lines for _, title, lines in sec.blocks("")}
@@ -433,8 +413,4 @@ def verdict(art: Artifact, anchor: str, choices: tuple[str, ...]) -> str | None:
         return None
     values = re.findall(r"^\s*(?:-\s*)?结论[:：]\s*(.*?)\s*$", sec.text, re.M)
     return values[0] if len(values) == 1 and values[0] in choices else None
-
-
-def section_missing_in(issues: list[Issue], art: Artifact, anchor: str) -> None:
-    issue(issues, art, 1, f"缺少固定标题：## {anchor}")
 

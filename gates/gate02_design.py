@@ -16,10 +16,9 @@ IMPACT_LABELS = [
 
 
 def check(ctx, art) -> bool | None:
-    issues = ctx.issues
     impacts = _impact(ctx, art)
     _architecture(ctx, art)
-    interface_na = _interface(ctx, art)
+    _interface(ctx, art)
     _data_model(ctx, art, schema_changed=impacts.get("数据库 schema 变更", False))
     _security(ctx, art)
     _compat(ctx, art)
@@ -27,7 +26,6 @@ def check(ctx, art) -> bool | None:
     _alternatives(ctx, art)
     _decision(ctx, art)
     _verification(ctx, art)
-    del interface_na
     return True if any(impacts.values()) else False
 
 
@@ -52,14 +50,13 @@ def _architecture(ctx, art) -> None:
         ctx.issue(art, sec.first_line(), "架构与模块过于简略：要写清涉及模块、职责、调用方向")
 
 
-def _interface(ctx, art) -> bool:
+def _interface(ctx, art) -> None:
     sec = _lib.section_ok(ctx.issues, art, "接口契约")
     if sec is None:
-        return False
+        return
     if _lib.is_section_na(sec):
-        return True
+        return
     _lib.need_table(ctx.issues, art, sec, "接口契约", min_rows=1)
-    return False
 
 
 def _data_model(ctx, art, schema_changed: bool) -> None:

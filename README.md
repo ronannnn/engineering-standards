@@ -131,6 +131,8 @@ python3 .engineering-standards/gates/run.py docs/engineering/coupon-import --mod
 
 ## 维护
 
+校验模块在 `gates/spec.py` 的产物注册项 `gate` 中指定；添加校验器无需再修改 `gates/run.py` 的映射。产物字段、模板和技能的同步要求保持不变。
+
 - 改门禁 = 同时改模板与对应技能（三处同源）。
 - 任何改动跑 `python3 -m unittest discover gates/tests`。
 - 变更记录写 [CHANGELOG.md](CHANGELOG.md)。

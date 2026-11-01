@@ -39,40 +39,29 @@ ANCHORS = {
 # signoff: "human" 必须人签收；"conditional" 条件触发后人签收；"auto" 可机器签收
 ARTIFACTS = [
     dict(code="01", title="需求分析", product="requirements", file="01-requirements.md",
-         prefix="REQ", depends=None, signoff="human", na_allowed=True),
+         prefix="REQ", depends=None, signoff="human", na_allowed=True, gate="gate01_requirements"),
     dict(code="02", title="技术设计", product="design", file="02-design.md",
-         prefix="DES", depends="01-requirements.md", signoff="conditional", na_allowed=True),
+         prefix="DES", depends="01-requirements.md", signoff="conditional", na_allowed=True, gate="gate02_design"),
     dict(code="03", title="UI/UX 设计", product="ui-design", file="03-ui-design.md",
-         prefix="UIX", depends="02-design.md", signoff="conditional", na_allowed=True),
+         prefix="UIX", depends="02-design.md", signoff="conditional", na_allowed=True, gate="gate03_ui_design"),
     dict(code="04", title="开发计划", product="tasks", file="04-tasks.md",
-         prefix="TSK", depends="03-ui-design.md", signoff="auto", na_allowed=False),
+         prefix="TSK", depends="03-ui-design.md", signoff="auto", na_allowed=False, gate="gate04_plan"),
     dict(code="05", title="编码实现", product="implementation", file="05-implementation.md",
-         prefix="IMP", depends="04-tasks.md", signoff="auto", na_allowed=False),
+         prefix="IMP", depends="04-tasks.md", signoff="auto", na_allowed=False, gate="gate05_implement"),
     dict(code="06", title="测试与评审", product="test-report", file="06-test-report.md",
-         prefix="TST", depends="05-implementation.md", signoff="auto", na_allowed=False),
+         prefix="TST", depends="05-implementation.md", signoff="auto", na_allowed=False, gate="gate06_test_report"),
     dict(code="06", title="测试与评审", product="review-report", file="06-review-report.md",
-         prefix="REV", depends="05-implementation.md", signoff="auto", na_allowed=False),
+         prefix="REV", depends="05-implementation.md", signoff="auto", na_allowed=False, gate="gate06_review_report"),
     dict(code="07", title="集成与交付", product="delivery", file="07-delivery.md",
          prefix="DLV", depends="06-test-report.md", also_depends=("06-review-report.md",),
-         signoff="human", na_allowed=False),
+         signoff="human", na_allowed=False, gate="gate07_delivery"),
     dict(code="08", title="维护与复盘", product="retro", file="08-retro.md",
-         prefix="RTR", depends="07-delivery.md", signoff="auto", na_allowed=True),
+         prefix="RTR", depends="07-delivery.md", signoff="auto", na_allowed=True, gate="gate08_retro"),
 ]
 
 STAGE_TITLES = {
     "01": "需求分析", "02": "技术设计", "03": "UI/UX设计", "04": "开发计划",
     "05": "编码实现", "06": "测试与评审", "07": "集成与交付", "08": "维护与复盘",
-}
-
-GATE_MODULES = {
-    "01": ["gate01_requirements"],
-    "02": ["gate02_design"],
-    "03": ["gate03_ui_design"],
-    "04": ["gate04_plan"],
-    "05": ["gate05_implement"],
-    "06": ["gate06_test_report", "gate06_review_report"],
-    "07": ["gate07_delivery"],
-    "08": ["gate08_retro"],
 }
 
 STATUSES = ("草稿", "待签收", "已冻结", "已废弃")

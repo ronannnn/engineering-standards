@@ -15,15 +15,6 @@ if str(HERE) not in sys.path:
 import _lib  # noqa: E402
 import spec  # noqa: E402
 
-MODULE_BY_PRODUCT = {
-    "requirements": "gate01_requirements", "design": "gate02_design",
-    "ui-design": "gate03_ui_design", "tasks": "gate04_plan",
-    "implementation": "gate05_implement", "test-report": "gate06_test_report",
-    "review-report": "gate06_review_report", "delivery": "gate07_delivery",
-    "retro": "gate08_retro",
-}
-
-
 class Context:
     def __init__(self, run_dir: Path):
         self.run_dir = run_dir
@@ -79,7 +70,7 @@ def validate_artifact(ctx: Context, entry: dict) -> None:
         _lib.check_status(ctx.issues, art, True)
         return
     _lib.check_anchors(ctx.issues, art)
-    module = importlib.import_module(MODULE_BY_PRODUCT[entry["product"]])
+    module = importlib.import_module(entry["gate"])
     _lib.check_status(ctx.issues, art, module.check(ctx, art))
 
 

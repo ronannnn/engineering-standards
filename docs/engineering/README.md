@@ -11,3 +11,4 @@
 | gate-maintenance | 优化完成，待最终验收 | 2026-11-01 |  |
 | requirements-navigation | 规则补充完成，待最终验收 | 2026-11-01 |  |
 | simple-changes | 规则补充完成，待最终验收 | 2026-11-01 |  |
+| gate-registry | 重构完成，待最终验收 | 2026-11-01 |  |
