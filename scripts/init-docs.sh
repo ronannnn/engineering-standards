@@ -11,8 +11,8 @@ if [ -z "$slug" ]; then
   exit 2
 fi
 
-if [[ ! "$slug" =~ ^[a-z0-9][a-z0-9-]*$ ]]; then
-  echo "slug 必须是 kebab-case（小写字母、数字、连字符），当前为：$slug" >&2
+if [[ ! "$slug" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+  echo "slug 必须是 kebab-case（小写字母或数字分段，段间一个连字符），当前为：$slug" >&2
   exit 2
 fi
 
@@ -56,20 +56,36 @@ slug = sys.argv[2]
 index = project_root / "docs" / "engineering" / "README.md"
 today = datetime.date.today().isoformat()
 
+table_header = "| 需求 | 状态 | 创建时间 | 备注 |\n|---|---|---|---|\n"
 header = (
     "# 需求运行目录\n\n"
     "每个需求一个目录，产物由 `gates/run.py` 校验。新增目录用 "
     "`scripts/init-docs.sh <slug>`。\n\n"
-    "| 需求 | 状态 | 创建时间 | 备注 |\n|---|---|---|---|\n"
+    + table_header
 )
+new_row = f"| {slug} | 进行中 | {today} |  |\n"
 
 if index.exists():
     text = index.read_text(encoding="utf-8")
-    if slug not in text:
-        text = text.rstrip("\n") + f"\n| {slug} | 进行中 | {today} |  |\n"
-        index.write_text(text, encoding="utf-8")
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, line in enumerate(lines)
+                  if line.lstrip().startswith("|") and line.split("|", 2)[1].strip() == "需求"), None)
+    if start is None:
+        text = text.rstrip("\n") + "\n\n" + table_header + new_row
+    else:
+        end = start + 1
+        while end < len(lines) and lines[end].lstrip().startswith("|"):
+            end += 1
+        names = {line.split("|", 2)[1].strip() for line in lines[start + 1:end]}
+        if slug in names:
+            sys.exit(0)
+        if not lines[end - 1].endswith("\n"):
+            lines[end - 1] += "\n"
+        lines.insert(end, new_row)
+        text = "".join(lines)
+    index.write_text(text, encoding="utf-8")
 else:
-    index.write_text(header + f"| {slug} | 进行中 | {today} |  |\n", encoding="utf-8")
+    index.write_text(header + new_row, encoding="utf-8")
 PY
 
 echo "已创建：$target"

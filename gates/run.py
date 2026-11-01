@@ -112,13 +112,16 @@ def print_issues(issues: list[_lib.Issue], run_dir: Path, label="全链") -> int
 def next_stage(run_dir: Path) -> int:
     # 按阶段验证有效性，遇到第一个未完成或不合法的阶段即返回。
     # 未开始的后续阶段不读取，不能让未来草稿阻塞当前阶段。
+    ctx = Context(run_dir)
+    validated = set()
     for code in dict.fromkeys(e["code"] for e in spec.ARTIFACTS):
         entries = spec.by_code(code)
         scope = dependency_scope(entries)
-        ctx = Context(run_dir)
-        load(ctx, scope)
+        load(ctx, [e for e in scope if e["product"] not in ctx.artifacts])
         for entry in scope:
-            validate_artifact(ctx, entry)
+            if entry["product"] not in validated:
+                validate_artifact(ctx, entry)
+                validated.add(entry["product"])
         pending = ctx.issues or any(ctx.art(e["product"]) is None or
                                    ctx.art(e["product"]).status() != "已冻结" for e in entries)
         if pending:

@@ -24,6 +24,26 @@ class RegressionTest(unittest.TestCase):
         if message:
             self.assertIn(message, output)
 
+    def test_next_reads_and_validates_each_artifact_once(self):
+        from collections import Counter
+        from unittest.mock import patch
+        import _lib
+
+        with patch.object(_lib, 'Artifact', wraps=_lib.Artifact) as read, patch.object(
+            fixtures.gate_run, 'validate_artifact', wraps=fixtures.gate_run.validate_artifact
+        ) as validate:
+            code, output = run_gate(self.fixture.dir, '--next')
+        self.assertEqual(code, 0, output)
+        counts = Counter(call.args[0].name for call in read.call_args_list)
+        self.assertEqual(counts, {entry['file']: 1 for entry in fixtures.gate_run.spec.ARTIFACTS})
+        self.assertEqual(validate.call_count, 9)
+
+    def test_next_rechecks_changes_between_calls(self):
+        code, output = run_gate(self.fixture.dir, '--next')
+        self.assertEqual(code, 0, output)
+        self.fixture.replace('01-requirements.md', '签收: 陈若南', '签收: -')
+        self.assert_blocked('--next', message='签收')
+
     def test_red_cannot_borrow_green_fields(self):
         import re
         self.edit("05-implementation.md", lambda t: re.sub(

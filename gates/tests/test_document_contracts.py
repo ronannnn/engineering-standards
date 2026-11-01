@@ -22,7 +22,7 @@ class DocumentContractTest(unittest.TestCase):
                 self.assertEqual(issues, [])
 
     def test_policy_references_resolve(self):
-        paths = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "THIRD_PARTY_NOTICES.md"]
+        paths = list(ROOT.glob("*.md"))
         for folder in ("policies", "skills", "templates", "adapters"):
             paths.extend((ROOT / folder).rglob("*.md"))
         for path in paths:

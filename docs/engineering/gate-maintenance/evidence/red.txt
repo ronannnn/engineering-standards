@@ -1,0 +1,51 @@
+..............................................................................F...........FFF.
+======================================================================
+FAIL: test_next_reads_and_validates_each_artifact_once (test_regressions.RegressionTest.test_next_reads_and_validates_each_artifact_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_regressions.py", line 38, in test_next_reads_and_validates_each_artifact_once
+    self.assertEqual(counts, {entry['file']: 1 for entry in fixtures.gate_run.spec.ARTIFACTS})
+AssertionError: Counter({'01-requirements.md': 8, '02-des[163 chars]: 1}) != {'01-requirements.md': 1, '02-design.md':[154 chars]': 1}
+
+======================================================================
+FAIL: test_index_keeps_shorter_name_and_existing_content (test_scaffold.ScaffoldTest.test_index_keeps_shorter_name_and_existing_content)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_scaffold.py", line 45, in test_index_keeps_shorter_name_and_existing_content
+    self.assertEqual(sum(line.startswith(f'| {slug} |') for line in content.splitlines()), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_invalid_slug_has_no_side_effect (test_scaffold.ScaffoldTest.test_invalid_slug_has_no_side_effect) (slug='coupon--import')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_scaffold.py", line 23, in test_invalid_slug_has_no_side_effect
+    self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+AssertionError: 0 != 2 : 已创建：/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpbrw9qizl/docs/engineering/coupon--import
+
+下一步：
+  1) 在 agent 里说：用 org-requirements 开始处理 coupon--import
+  2) 写完一段就跑：python3 gates/run.py docs/engineering/coupon--import --stage 01
+  3) 需要拆模块时：python3 scripts/init-module.py docs/engineering/coupon--import users/access
+  4) 合并前跑 --delivery，观察复盘完成后跑 --all
+
+
+======================================================================
+FAIL: test_invalid_slug_has_no_side_effect (test_scaffold.ScaffoldTest.test_invalid_slug_has_no_side_effect) (slug='coupon-import-')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/ruonanchen/Desktop/engineering-standards/gates/tests/test_scaffold.py", line 23, in test_invalid_slug_has_no_side_effect
+    self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+AssertionError: 0 != 2 : 已创建：/private/var/folders/yl/fg3vg3xs3217qw0qqm5fsmwr0000gn/T/tmpc6j1rz0d/docs/engineering/coupon-import-
+
+下一步：
+  1) 在 agent 里说：用 org-requirements 开始处理 coupon-import-
+  2) 写完一段就跑：python3 gates/run.py docs/engineering/coupon-import- --stage 01
+  3) 需要拆模块时：python3 scripts/init-module.py docs/engineering/coupon-import- users/access
+  4) 合并前跑 --delivery，观察复盘完成后跑 --all
+
+
+----------------------------------------------------------------------
+Ran 93 tests in 1.117s
+
+FAILED (failures=4)

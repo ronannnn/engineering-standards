@@ -61,6 +61,8 @@ python3 .engineering-standards/gates/run.py docs/engineering/coupon-import --all
 
 新建文件都是草稿，未填写或缺签收时检查失败是正常现象。`--stage` 当前内容自检通过不等于已冻结；交付和归档还会检查签收及依赖。先填写并按规则冻结，不为“全绿”编造签收或验证结果。
 
+需求 slug 使用小写字母或数字分段，段间一个连字符，例如 `coupon-import`；不能使用连续或结尾连字符，以保证初始化目录也能被 CI 识别。
+
 示例以 Bash 和 Python 3.12 为验证环境，门禁只依赖 Python 标准库。标准仓库自身维护时，脚本路径直接使用 `scripts/` 和 `gates/`，不加快照前缀。
 
 ## 目录导航
